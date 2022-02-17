@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.css" />
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="MM Api Demo" />
+
+    <!-- Twitter -->
+    <meta property="twitter:title" content="MM Api Demo" />
+    <meta property="twitter:description" content="MM Api Demo, Currently broken due to plan plugin update" />
+
+    <title>MM Api Demo</title>
+</head>
+
+<body">
+
+    <div class="main" style="width: 100vw; height: 100vh; margin: 0;">
+        <div class="container">
+            <div class="row">
+                <h2 class="title">MetaMechanists Api Demo</h2>
+                <h4>Note: Currently broken due to website update, see screenshot <a href="https://media.discordapp.net/attachments/547512788537573389/943823479512379442/unknown.png">here<a>.</h4>
+                <button type="button" class="btn btn-primary" onclick="getData()" id="refresh">Refresh</button>
+            </div>
+            <div class="row">
+                <div class="col col-hover" id="playerlist">
+                    Online Players
+                    <ul id="pl-content">
+
+                    </ul>
+                </div>
+                <div class="col ol-hover" id="playtime">
+                    Total Playtime
+                    <ol id="pt-content">
+
+                    </ol>
+                </div>
+                <div class="col ol-hover" id="mobkills">
+                    Total Mob Kills
+                    <ol id="mk-content">
+
+                    </ol>
+                </div>
+                <div class="col ol-hover" id="playerkills">
+                    Total Player Kills
+
+                    <ol id="pk-content">
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/assets/js/index.js"></script>
+</body>
+
+</html>
