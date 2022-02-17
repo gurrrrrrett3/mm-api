@@ -3,10 +3,15 @@ import { mmFetchPlayersReturn } from "./types";
 import parse from "node-html-parser";
 import mmInterface from "./interface";
 
+//Timeframes to get data for
 type Stat = "total" | "week" | "month";
 
 export default class mmLeaderboard {
+
+  //Generates a leaderboard of the top 10 players sorted by playtime
   public static async playtime(stat: Stat) {
+
+    //Get the full player data file
     const data = (await mmApi.fetch({
       endpoint: "players",
       timestamp: Date.now(),
@@ -14,10 +19,12 @@ export default class mmLeaderboard {
 
     let out: PlaytimeLeaderboardItem[] = [];
 
+    //For each player, get their playtime
     data.data.forEach(async (player) => {
       const playername = parse(player.name).childNodes[0].rawText;
       const playerData = mmInterface.getPlayer(playername);
 
+      //Select the correct data value to use based on the timeframe
       let f_playtime = "";
       switch (stat) {
         case "total":
@@ -30,6 +37,7 @@ export default class mmLeaderboard {
           f_playtime = playerData.online_activity.active_playtime_30d;
           break;
       }
+      //Format a json object to send to the client
       out.push({
         name: playername,
         playtime: mmInterface.formatPlanDate(f_playtime),
@@ -43,7 +51,9 @@ export default class mmLeaderboard {
     return out.slice(0, 10);
   }
 
+  //Generates a leaderboard of the top 10 players sorted by mob kills
   public static async mobKills(stat: Stat) {
+    //Get the full player data file
     const data = (await mmApi.fetch({
       endpoint: "players",
       timestamp: Date.now(),
@@ -51,10 +61,12 @@ export default class mmLeaderboard {
 
     let out: MobKillsLeaderboardItem[] = [];
 
+    //For each player, get their mob kills
     data.data.forEach(async (player) => {
       const playername = parse(player.name).childNodes[0].rawText;
       const playerData = mmInterface.getPlayer(playername);
 
+      //Select the correct data value to use based on the timeframe
       let mobKills = 0;
       switch (stat) {
         case "total":
@@ -67,6 +79,7 @@ export default class mmLeaderboard {
           mobKills = playerData.kill_data.mob_kills_30d;
           break;
       }
+      //Format a json object to send to the client
       out.push({
         name: playername,
         mobKills,
@@ -79,15 +92,18 @@ export default class mmLeaderboard {
     return out.slice(0, 10);
   }
 
+  //Generates a leaderboard of the top 10 players sorted by total deaths
   public static async playerKills(stat: Stat) {
     const data = mmInterface.getPlayers();
 
     let out: PlayerKillsLeaderboardItem[] = [];
 
+    //For each player, get their total player kills
     data.data.forEach(async (player) => {
       const playername = parse(player.name).childNodes[0].rawText;
       const playerData = mmInterface.getPlayer(playername);
 
+      //Select the correct data value to use based on the timeframe
       let playerKills = 0;
       switch (stat) {
         case "total":
@@ -100,6 +116,7 @@ export default class mmLeaderboard {
           playerKills = playerData.kill_data.player_kills_30d;
           break;
       }
+      //Format a json object to send to the client
       out.push({
         name: playername,
         playerKills,

@@ -1,3 +1,12 @@
+/*
+  @TYPES FILE
+  
+  This file contains all the types used in the application.
+  It's used as "Templates" for data types to keep them consistent.
+  I generated them with actual data from the plan API
+
+*/
+
 export type mmFetchOptions =
   | mmFetchOverview
   | mmFetchSessionsOverview

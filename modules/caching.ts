@@ -25,12 +25,14 @@ export default class mmCaching {
     this.timer = setInterval(function() {}, 3e4);
   }
 
+  //Save data so that we don't have to fetch it again
   public async Cache() {
     this.updateCacheTimestamp();    
     await this.cachePlayers();
     this.saveReport();
   }
 
+  //Save player data to the cache
   public async cachePlayers() {
     const data = (await mmApi.fetch({
       endpoint: "players",
@@ -57,6 +59,8 @@ export default class mmCaching {
    
   }
 
+  //Quick utility functions
+
   public checkCacheTimestamp() {
     const data = this.getCacheData();
     return Date.now() - data.timestamp;
@@ -76,6 +80,8 @@ export default class mmCaching {
         data.report = report;
         this.saveCacheData(data);
     }
+
+    //Cache save and access functions
 
   private saveCache(data: any, file: string) {
     fs.writeFileSync(path.resolve(`./data/cache/${file}.json`), JSON.stringify(data));

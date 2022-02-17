@@ -17,10 +17,18 @@ import config from "../conifg.json";
 const apiUrl = config.baseUrl
 
 export default class mmApi {
+  /**
+   * A wrapper for fetch that generates the url, and handles errors
+   * @param options options for the request
+   * @returns {Promise<mmFetchReturn>}
+   */
   public static async fetch(options: mmFetchOptions) {
+    //Convert the options to an endpoint and query
     const endpoint = this.genEndpoint(options);
     const query = this.genQuery(options);
     const url = `${apiUrl}${endpoint}${query}`;
+    
+    //Send the request
     const response = await fetch(url).catch((err) => {
       this.handleFetchError(err, url);
     });
@@ -29,6 +37,8 @@ export default class mmApi {
         error: true,
         message: "Failed to fetch data",
       };
+
+      //Convert the response to JSON so that I can parse it
     const data = await response.json().catch((err) => {
       this.handleFetchError(err, url);
       return {
@@ -41,6 +51,11 @@ export default class mmApi {
     return this.dataTyper(data, options);
   }
 
+  /**
+   * A utility function to generate the endpoint for the request based on the options
+   * @param options 
+   * @returns 
+   */
   private static genEndpoint(options: mmFetchOptions) {
     switch (options.endpoint) {
       case "overview":
@@ -68,6 +83,11 @@ export default class mmApi {
     }
   }
 
+  /**
+   * Creates the query string for the request based on the options
+   * @param options 
+   * @returns 
+   */
   private static genQuery(options: mmFetchOptions) {
     let out = "?";
 
@@ -81,6 +101,12 @@ export default class mmApi {
     return out;
   }
 
+  /**
+   * A utility function to add typings to the data returned from the API
+   * @param data data returned from the API
+   * @param options options for the request
+   * @returns data typed as the correct type
+   */
   private static dataTyper(data: mmFetchReturn, options: mmFetchOptions) {
     switch (options.endpoint) {
       case "overview":
@@ -104,6 +130,11 @@ export default class mmApi {
     }
   }
 
+  /**
+   * Error handling for fetch
+   * @param err 
+   * @param url 
+   */
   private static handleFetchError(err: any, url: string) {
     console.log(`Failed to fetch ${url}`);
   }

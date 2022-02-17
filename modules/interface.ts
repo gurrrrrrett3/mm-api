@@ -5,7 +5,14 @@ import { mmFetchPlayerReturn, mmFetchPlayersReturn, mmFetchSessionsReturn, Sessi
 
 const Cache = new mmCaching();
 
+
+/**
+ * Interface for the website to use
+ * Makes it simplier to access things
+ */
 export default class mmInterface {
+
+  //converts a plan date (12d 1h 4m 3s) to seconds
   public static formatPlanDate(date: string) {
     const dateArr = date.split(" ");
     const cleanDateArr = dateArr.map((date) => {
@@ -26,7 +33,7 @@ export default class mmInterface {
 
     return time;
   }
-
+//Creates a list of online players
   public static async generatePlayerList() {
     const sessions = await mmInterface.getOnlineSessons();
     let players: string[] = [];
@@ -35,16 +42,18 @@ export default class mmInterface {
       players.push(session.name);
     });
   }
-
+  //Get's a player's data from the cache
   public static getPlayer(playerName: string) {
     const data = Cache.loadCachedPlayer(playerName);
     return data as mmFetchPlayerReturn;
   }
 
+  //Gets the full player data file from the cache
   public static getPlayers() {
     return Cache.loadCache("players") as mmFetchPlayersReturn;
   }
 
+  //Forces a player to be fetched, and saves it to the cache
   public static async fetchPlayer(playerName: string) {
     const data = (await mmApi.fetch({
       endpoint: "player",
@@ -56,6 +65,7 @@ export default class mmInterface {
     return data;
   }
 
+  //Gets a list of sessions that are currently online 
   public static async getOnlineSessons() {
     const data = (await mmApi.fetch({
       endpoint: "sessions",
@@ -73,6 +83,7 @@ export default class mmInterface {
     return out;
   }
 
+  //Wrapper function for fetching and generating leaderboards
   public static async getLeaderboard(type: LeaderboardType, stat?: "total" | "week" | "month") {
     stat = stat || "total";
     switch (type) {
@@ -88,4 +99,5 @@ export default class mmInterface {
   }
 }
 
+//@TODO finish death and kd leaderboards
 type LeaderboardType = "playtime" | "mobkills" | "playerkills" | "deaths" | "kd";
