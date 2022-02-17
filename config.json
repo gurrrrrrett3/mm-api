@@ -1,0 +1,6 @@
+{
+    "baseUrl": "https://analytics.metamechanists.org/data",
+    "mapUrl": "https://map.metamechanists.org",
+    "cacheInterval": 60,
+    "mapCacheInterval": 10
+}

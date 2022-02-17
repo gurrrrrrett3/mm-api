@@ -1,10 +1,16 @@
 import mmCaching from "./caching";
 import mmApi from "./fetch";
 import mmLeaderboard from "./leaderboard";
+import mmMap from "./map";
 import { mmFetchPlayerReturn, mmFetchPlayersReturn, mmFetchSessionsReturn, Session } from "./types";
+import config from "../config.json";
 
 const Cache = new mmCaching();
+export { Cache };
 
+setInterval(() => {
+  mmMap.fetchPlayers();
+}, config.mapCacheInterval * 1e3);
 
 /**
  * Interface for the website to use

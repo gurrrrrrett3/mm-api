@@ -519,3 +519,32 @@ export type direction = "+" | "-";
 export interface ANY {
   [key: string]: any;
 }
+
+
+//Map
+
+export interface mmFetchMapTile {
+  endpoint: "tile";
+  world: string;
+  x: number;
+  z: number;
+  zoom: number;
+}
+
+export interface mmFetchMapPlayersReturn {
+  max: number;
+  players: Player[];
+}
+
+export interface Player {
+  world: string;
+  armor: number;
+  name: string;
+  x: number;
+  health: number;
+  z: number;
+  display_name: string;
+  uuid: string;
+  yaw: number;
+}
+

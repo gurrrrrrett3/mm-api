@@ -4,7 +4,7 @@ import parse from "node-html-parser";
 import mmInterface from "./interface";
 import mmApi from "./fetch";
 import { mmFetchPlayersReturn } from "./types";
-import config from "../conifg.json"
+import config from "../config.json"
 export default class mmCaching {
   public lastCache: number;
   public timer: NodeJS.Timer;
@@ -21,7 +21,7 @@ export default class mmCaching {
     this.lastCache = Date.now();
     this.checkForCacheFiles();
     this.checkForCacheData();
-    this.Cache();
+    //this.Cache();
     this.timer = setInterval(function() {}, 3e4);
   }
 
@@ -83,12 +83,12 @@ export default class mmCaching {
 
     //Cache save and access functions
 
-  private saveCache(data: any, file: string) {
+  public saveCache(data: any, file: string) {
     fs.writeFileSync(path.resolve(`./data/cache/${file}.json`), JSON.stringify(data));
   }
 
   public loadCache(file: string) {
-    return JSON.parse(fs.readFileSync(path.resolve(`./data/mm/cache/${file}.json`), "utf8"));
+    return JSON.parse(fs.readFileSync(path.resolve(`./data/cache/${file}.json`), "utf8"));
   }
 
   public saveCachedPlayer(username: string, data: any) {

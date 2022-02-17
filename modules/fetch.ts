@@ -12,7 +12,7 @@ import {
   mmFetchSessionsReturn,
   mmFetchPlayersReturn,
 } from "./types";
-import config from "../conifg.json";
+import config from "../config.json";
 
 const apiUrl = config.baseUrl
 
