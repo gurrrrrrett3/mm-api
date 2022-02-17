@@ -59,23 +59,23 @@ export default class mmApi {
   private static genEndpoint(options: mmFetchOptions) {
     switch (options.endpoint) {
       case "overview":
-        return `/network/overview`;
+        return `/network/overview.json`;
       case "sessionsOverview":
-        return `/network/sessionsOverview`;
+        return `/network/sessionsOverview.json`;
       case "playerbaseOverview":
-        return `/network/playerbaseOverview`;
+        return `/network/playerbaseOverview.json`;
       case "sessions":
-        return `/sessions`;
+        return `/sessions.json`;
       case "pingTable":
-        return `/network/pingTable`;
+        return `/network/pingTable.json`;
       case "servers":
-        return `/network/servers`;
+        return `/network/servers.json`;
       case "graph":
-        return `/graph`;
+        return `/graph.json`;
       case "player":
-        return `/player`;
+        return `/player.json`;
       case "players":
-        return `/players`;
+        return `/players.json`;
       default:
         //@ts-expect-error
         console.log("mmFetch: genEndpoint: Unknown endpoint: " + options.endpoint);

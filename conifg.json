@@ -1,4 +1,4 @@
 {
-    "baseUrl": "http://obelisk.game-server.cc:8804/v1",
+    "baseUrl": "https://analytics.metamechanists.org/data",
     "cacheInterval": 60
 }
