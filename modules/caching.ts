@@ -4,6 +4,7 @@ import parse from "node-html-parser";
 import mmInterface from "./interface";
 import mmApi from "./fetch";
 import { mmFetchPlayersReturn } from "./types";
+import config from "../conifg.json"
 export default class mmCaching {
   public lastCache: number;
   public timer: NodeJS.Timer;
@@ -14,14 +15,14 @@ export default class mmCaching {
     took: 0
   }
   
-  public TIME_BETWEEN_CACHE_UPDATES = 1000 * 60 * 60; //1 hour 
+  public TIME_BETWEEN_CACHE_UPDATES = config.cacheInterval * 6e4; 
 
   constructor() {
     this.lastCache = Date.now();
     this.checkForCacheFiles();
     this.checkForCacheData();
     this.Cache();
-    this.timer = setInterval(function() {}, 5000 * 60);
+    this.timer = setInterval(function() {}, 3e4);
   }
 
   public async Cache() {

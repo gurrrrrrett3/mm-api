@@ -1,0 +1,4 @@
+{
+    "baseUrl": "http://obelisk.game-server.cc:8804/v1",
+    "cacheInterval": 60
+}

@@ -12,8 +12,9 @@ import {
   mmFetchSessionsReturn,
   mmFetchPlayersReturn,
 } from "./types";
+import config from "../conifg.json";
 
-const apiUrl = "http://obelisk.game-server.cc:8804/v1";
+const apiUrl = config.baseUrl
 
 export default class mmApi {
   public static async fetch(options: mmFetchOptions) {

@@ -74,3 +74,13 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+
+#compiled ts
+dist/
+
+#data
+data/
+
+#cache
+data/cache/
