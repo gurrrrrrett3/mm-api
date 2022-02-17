@@ -1,1 +1,0 @@
-{"error":true,"message":"Failed to parse data as JSON","err":{"message":"invalid json response body at https://analytics.metamechanists.org/login?from=./v1/players?timestamp=1645107343303 reason: Unexpected token < in JSON at position 0","type":"invalid-json"}}
