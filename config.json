@@ -1,7 +1,8 @@
 {
-    "baseUrl": "https://analytics.metamechanists.org/v1",
-    "loginUrl" : "https://analytics.metamechanists.org/auth/login",
-    "mapUrl": "https://map.metamechanists.org",
-    "cacheInterval": 60,
-    "mapCacheInterval": 10
+  "baseUrl": "https://analytics.metamechanists.org/v1",
+  "loginUrl": "https://analytics.metamechanists.org/auth/login",
+  "mapUrl": "https://map.metamechanists.org",
+  "cacheInterval": 60,
+  "mapCacheInterval": 10,
+  "mapImageRenderSize": 128
 }

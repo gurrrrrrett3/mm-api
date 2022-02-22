@@ -9,6 +9,8 @@ export default async function login(auth: { username: string; password: string }
     formData.append("user", auth.username);
     formData.append("password", auth.password);
 
+    console.log(`Logging in as ${auth.username}`);
+
     fetch(config.loginUrl, {
       method: "POST",
       headers: {
@@ -28,6 +30,7 @@ export default async function login(auth: { username: string; password: string }
         process.exit(1);
       }
       Cache.saveLoginData(token);
+      console.log(`Login successful, token: ${token}`);
     });
   } catch (error) {
     console.log(error);

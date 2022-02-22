@@ -30,6 +30,19 @@ export default class mmMap {
     };
   }
 
+  /**
+   * Gets the top left corner of the tile
+   * @param x x index of the tile
+   * @param z z index of the tile
+   * @param zoom zoom level 
+   */
+  public static tileToCoords(x: number, z: number, zoom: number) {
+    return {
+      x: x * this.genScale(zoom),
+      z: z * this.genScale(zoom),
+    };
+  }
+
   public static async getTile(x: number, z: number, zoom: number, world: string) {
     const tile = this.coordsToTile(x, z, zoom);
     const options: mmFetchMapTile = {
@@ -52,6 +65,40 @@ export default class mmMap {
       right: z - (z % this.genScale(zoom)) + this.genScale(zoom),
     };
     return edges;
+  }
+
+
+  public static getTileFetchList(x: number, z: number, zoom: number, world: string) {
+    let out = []
+
+    //Get the coordinates of the current tile
+    const currentTile = this.coordsToTile(x, z, zoom);
+    const currentTileCoords = this.tileToCoords(currentTile.x, currentTile.z, zoom);
+    //Get the corners of the current tile
+    const corners = {
+      topLeft: currentTileCoords,
+      topRight: {
+        x: currentTileCoords.x + this.genScale(zoom),
+        z: currentTileCoords.z,
+      },
+      bottomLeft: {
+        x: currentTileCoords.x,
+        z: currentTileCoords.z + this.genScale(zoom),
+      },
+      bottomRight: {
+        x: currentTileCoords.x + this.genScale(zoom),
+        z: currentTileCoords.z + this.genScale(zoom),
+      },
+    }
+    
+    const minDistinceToEdge = this.genScale(zoom) / 2;
+
+    const tilesNeeded = {
+      above: corners.topLeft.z - z < minDistinceToEdge,
+      below: z - corners.bottomLeft.z < minDistinceToEdge,
+      left: corners.topLeft.x - x < minDistinceToEdge,
+      right: x - corners.topRight.x < minDistinceToEdge,
+    }
   }
 
   public static genScale(zoom: number) {

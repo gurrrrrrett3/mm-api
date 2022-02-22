@@ -27,7 +27,10 @@ export default class mmApi {
     const endpoint = this.genEndpoint(options);
     const query = this.genQuery(options);
     const url = `${apiUrl}${endpoint}${query}`;
-    
+
+    //Save current timestamp to get the time it took to fetch
+    const start = Date.now();
+
     //Send the request
     const response = await fetch(url, {
       method: "GET",
@@ -53,7 +56,7 @@ export default class mmApi {
         err,
       };
     });
-    console.log(url);
+    console.log(`Fetched ${url} in ${Date.now() - start}ms`);
     return this.dataTyper(data, options);
   }
 

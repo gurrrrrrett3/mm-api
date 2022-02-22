@@ -4,6 +4,7 @@ import parse from "node-html-parser";
 import { Cache } from "./interface";
 import Map from "./map";
 import { mmFetchMapPlayersReturn } from "./types";
+import config from "../config.json";
 
 export default class ImageGen {
   public static async getPlayerSnapshot(player: string) {
@@ -13,7 +14,6 @@ export default class ImageGen {
 
     //Get distance from edge of closest tiles
     const edges = Map.getEdges(playerData.x, playerData.z, 3);
-
   }
 
   public static async genPlayerUsernameImage(player: string) {

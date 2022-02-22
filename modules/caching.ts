@@ -4,8 +4,8 @@ import parse from "node-html-parser";
 import mmInterface from "./interface";
 import mmApi from "./fetch";
 import { mmFetchPlayersReturn } from "./types";
-import config from "../config.json"
-import auth from "../auth.json"
+import config from "../config.json";
+import auth from "../auth.json";
 import login from "./login";
 export default class mmCaching {
   //@ts-ignore
@@ -16,26 +16,24 @@ export default class mmCaching {
   public reportData = {
     players: 0,
     sessions: 0,
-    took: 0
-  }
-  
-  public TIME_BETWEEN_CACHE_UPDATES = config.cacheInterval * 6e4; 
+    took: 0,
+  };
+
+  public TIME_BETWEEN_CACHE_UPDATES = config.cacheInterval * 6e4;
 
   constructor() {
-
     login(auth).then(() => {
-
-    this.lastCache = Date.now();
-    this.checkForCacheFiles();
-    this.checkForCacheData();
-    this.Cache();
-    this.timer = setInterval(function() {}, 3e4);
+      this.lastCache = Date.now();
+      this.checkForCacheFiles();
+      this.checkForCacheData();
+      this.Cache();
+      this.timer = setInterval(function () {}, 3e4);
     });
   }
 
   //Save data so that we don't have to fetch it again
   public async Cache() {
-    this.updateCacheTimestamp();    
+    this.updateCacheTimestamp();
     await this.cachePlayers();
     this.saveReport();
   }
@@ -47,24 +45,44 @@ export default class mmCaching {
       timestamp: Date.now(),
     })) as mmFetchPlayersReturn;
 
+    //Generate a list of players that have been changed since the last cache
+    const oldPlayers = this.loadCache("players") as mmFetchPlayersReturn;
+    const newPlayers = data;
+    let changedPlayers = [];
+
+    for (let i = 0; i < newPlayers.data.length; i++) {
+      const newPlayer = newPlayers.data[i];
+      const oldPlayer = oldPlayers.data.find((player) => player.name === newPlayer.name);
+
+      if (oldPlayer) {
+        if (oldPlayer.activePlaytime.d !== newPlayer.activePlaytime.d) {
+          console.log(`${newPlayer.activePlaytime.v} - ${oldPlayer.activePlaytime.v}`);
+          changedPlayers.push(newPlayer.name);
+        }
+      } else {
+        changedPlayers.push(newPlayer.name);
+      }
+    }
+
     this.saveCache(data, "players");
+    
+    console.log(`Cached ${data.data.length} players, with ${changedPlayers.length} changed.`);
 
     const queue: string[] = [];
 
-    data.data.forEach((player) => {
-      queue.push(parse(player.name).childNodes[0].rawText);
+    changedPlayers.forEach((player) => {
+      queue.push(parse(player).childNodes[0].rawText);
     });
 
     for (let i = 0; i < queue.length; i++) {
-        const username = queue[i];
-       await mmInterface.fetchPlayer(username).then((playerData) => {
-          this.saveCachedPlayer(username, playerData);
-          if (!playerData.sessions) return;
-          this.reportData.players++;
-          this.reportData.sessions += playerData.sessions.length;
-        });
-      }
-   
+      const username = queue[i];
+      await mmInterface.fetchPlayer(username).then((playerData) => {
+        this.saveCachedPlayer(username, playerData);
+        if (!playerData.sessions) return;
+        this.reportData.players++;
+        this.reportData.sessions += playerData.sessions.length;
+      });
+    }
   }
 
   //Quick utility functions
@@ -79,17 +97,17 @@ export default class mmCaching {
     let data = this.getCacheData();
     data.timestamp = this.lastCache;
     this.saveCacheData(data);
-    }
+  }
 
-    private saveReport() {
-        const data = this.getCacheData();
-        let report = this.reportData;
-        report.took = Date.now() - data.timestamp;
-        data.report = report;
-        this.saveCacheData(data);
-    }
+  private saveReport() {
+    const data = this.getCacheData();
+    let report = this.reportData;
+    report.took = Date.now() - data.timestamp;
+    data.report = report;
+    this.saveCacheData(data);
+  }
 
-    //Cache save and access functions
+  //Cache save and access functions
 
   public saveCache(data: any, file: string) {
     fs.writeFileSync(path.resolve(`./data/cache/${file}.json`), JSON.stringify(data));
@@ -128,10 +146,10 @@ export default class mmCaching {
       this.saveCacheData({
         timestamp: Date.now(),
         report: {
-            players: 0,
-            sessions: 0,
-            took: 0
-        }
+          players: 0,
+          sessions: 0,
+          took: 0,
+        },
       });
     }
   }
