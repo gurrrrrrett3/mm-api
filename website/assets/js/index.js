@@ -1,24 +1,24 @@
 const lists = {
-    players: document.getElementById("pl-content "),
-    playtime: document.getElementById("pt-content "),
-    mobkills: document.getElementById("mk-content "),
-    playerkills: document.getElementById("pk-content "),
+    players: document.getElementById("pl-content"),
+    playtime: document.getElementById("pt-content"),
+    mobkills: document.getElementById("mk-content"),
+    playerkills: document.getElementById("pk-content"),
 };
 
 let totalFetched = 0;
 
 async function getData() {
     totalFetched = 0;
-    document.getElementById("refresh ").innerText = "Refreshing...";
+    document.getElementById("refresh").innerText = "Refreshing...";
 
 
-    (await fetch("/api/mm/onlinelist")).json().then((online) => {
+    (await fetch("/api/onlinelist")).json().then((online) => {
         removeAllChildren(lists.players);
         createList(lists.players, online);
         addToCounter()
     });
 
-    (await fetch("/api/mm/lb/playtime")).json().then((playtime) => {
+    (await fetch("/api/lb/playtime")).json().then((playtime) => {
         removeAllChildren(lists.playtime);
         let playtimeList = [];
         playtime.forEach(function(item) {
@@ -28,7 +28,7 @@ async function getData() {
         addToCounter()
     });
 
-    (await fetch("/api/mm/lb/mobkills")).json().then((mobkills) => {
+    (await fetch("/api/lb/mobkills")).json().then((mobkills) => {
         removeAllChildren(lists.mobkills);
         let mobkillsList = [];
         mobkills.forEach(function(item) {
@@ -38,7 +38,7 @@ async function getData() {
         addToCounter()
     });
 
-    (await fetch("/api/mm/lb/kills")).json().then((playerkills) => {
+    (await fetch("/api/lb/kills")).json().then((playerkills) => {
         removeAllChildren(lists.playerkills);
         let playerkillsList = [];
         playerkills.forEach(function(item) {
@@ -73,7 +73,7 @@ function formatNumber(num) {
 function addToCounter() {
     totalFetched++;
     if (totalFetched === 4) {
-        document.getElementById("refresh ").innerText = "Refresh";
+        document.getElementById("refresh").innerText = "Refresh";
     }
 }
 

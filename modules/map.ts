@@ -3,7 +3,6 @@ import fs from "fs";
 import config from "../config.json";
 import { mmFetchMapPlayersReturn, mmFetchMapTile, Player } from "./types";
 import mmInterface, { Cache } from "./interface";
-
 export default class mmMap {
   public static async fetchPlayers(): Promise<mmFetchMapPlayersReturn> {
     const endpoint = "/tiles/players.json";

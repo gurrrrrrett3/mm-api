@@ -84,3 +84,6 @@ data/
 
 #cache
 data/cache/
+
+#Login info
+auth.json

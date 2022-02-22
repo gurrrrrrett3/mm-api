@@ -5,8 +5,12 @@ import mmInterface from "./interface";
 import mmApi from "./fetch";
 import { mmFetchPlayersReturn } from "./types";
 import config from "../config.json"
+import auth from "../auth.json"
+import login from "./login";
 export default class mmCaching {
+  //@ts-ignore
   public lastCache: number;
+  //@ts-ignore
   public timer: NodeJS.Timer;
 
   public reportData = {
@@ -18,11 +22,15 @@ export default class mmCaching {
   public TIME_BETWEEN_CACHE_UPDATES = config.cacheInterval * 6e4; 
 
   constructor() {
+
+    login(auth).then(() => {
+
     this.lastCache = Date.now();
     this.checkForCacheFiles();
     this.checkForCacheData();
-    //this.Cache();
+    this.Cache();
     this.timer = setInterval(function() {}, 3e4);
+    });
   }
 
   //Save data so that we don't have to fetch it again
@@ -107,6 +115,14 @@ export default class mmCaching {
     fs.writeFileSync(path.resolve(`./data/cache/data.json`), JSON.stringify(data));
   }
 
+  public saveLoginData(data: string) {
+    fs.writeFileSync(path.resolve(`./data/cache/auth`), data);
+  }
+
+  public loadLoginData(): string {
+    return fs.readFileSync(path.resolve(`./data/cache/auth`), "utf8");
+  }
+
   private checkForCacheData() {
     if (!fs.existsSync(path.resolve(`./data/cache/data.json`))) {
       this.saveCacheData({
@@ -123,6 +139,9 @@ export default class mmCaching {
   private checkForCacheFiles() {
     if (!fs.existsSync(path.resolve(`./data/cache/players`))) {
       fs.mkdirSync(path.resolve(`./data/cache/players`), { recursive: true });
+    }
+    if (!fs.existsSync(path.resolve(`./data/cache/mapPlayers.json`))) {
+      fs.writeFileSync(path.resolve(`./data/cache/mapPlayers.json`), "[]");
     }
   }
 }

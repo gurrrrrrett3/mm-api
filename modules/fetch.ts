@@ -12,6 +12,7 @@ import {
   mmFetchSessionsReturn,
   mmFetchPlayersReturn,
 } from "./types";
+import { Cache } from "./interface";
 import config from "../config.json";
 
 const apiUrl = config.baseUrl
@@ -20,7 +21,6 @@ export default class mmApi {
   /**
    * A wrapper for fetch that generates the url, and handles errors
    * @param options options for the request
-   * @returns {Promise<mmFetchReturn>}
    */
   public static async fetch(options: mmFetchOptions) {
     //Convert the options to an endpoint and query
@@ -29,14 +29,20 @@ export default class mmApi {
     const url = `${apiUrl}${endpoint}${query}`;
     
     //Send the request
-    const response = await fetch(url).catch((err) => {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Cookie": `auth=${Cache.loadLoginData()}`,
+      }
+    }).catch((err) => {
       this.handleFetchError(err, url);
     });
     if (!response)
       return {
         error: true,
         message: "Failed to fetch data",
-      };
+      }
 
       //Convert the response to JSON so that I can parse it
     const data = await response.json().catch((err) => {
@@ -59,23 +65,23 @@ export default class mmApi {
   private static genEndpoint(options: mmFetchOptions) {
     switch (options.endpoint) {
       case "overview":
-        return `/network/overview.json`;
+        return `/network/overview`;
       case "sessionsOverview":
-        return `/network/sessionsOverview.json`;
+        return `/network/sessionsOverview`;
       case "playerbaseOverview":
-        return `/network/playerbaseOverview.json`;
+        return `/network/playerbaseOverview`;
       case "sessions":
-        return `/sessions.json`;
+        return `/sessions`;
       case "pingTable":
-        return `/network/pingTable.json`;
+        return `/network/pingTable`;
       case "servers":
-        return `/network/servers.json`;
+        return `/network/servers`;
       case "graph":
-        return `/graph.json`;
+        return `/graph`;
       case "player":
-        return `/player.json`;
+        return `/player`;
       case "players":
-        return `/players.json`;
+        return `/players`;
       default:
         //@ts-expect-error
         console.log("mmFetch: genEndpoint: Unknown endpoint: " + options.endpoint);
