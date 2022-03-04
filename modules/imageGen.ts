@@ -1,5 +1,4 @@
 import fs from "fs";
-import Canvas from "node-canvas";
 import parse from "node-html-parser";
 import { Cache } from "./interface";
 import Map from "./map";
@@ -21,11 +20,5 @@ export default class ImageGen {
     const playerData = players.players.find((p) => p.name.toLowerCase() === player.toLowerCase());
     if (!playerData) return null;
     const usernameClean = parse(playerData.display_name).childNodes[0].rawText;
-    const canvas = Canvas.createCanvas(usernameClean.length * 16, 32);
-    const ctx = canvas.getContext("2d");
-
-    ctx.font = "24px monospace";
-    
-
   }
 }
