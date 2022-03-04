@@ -50,6 +50,8 @@ export default class mmCaching {
     const newPlayers = data;
     let changedPlayers = [];
 
+    if (!oldPlayers) return;
+
     for (let i = 0; i < newPlayers.data.length; i++) {
       const newPlayer = newPlayers.data[i];
       const oldPlayer = oldPlayers.data.find((player) => player.name === newPlayer.name);
