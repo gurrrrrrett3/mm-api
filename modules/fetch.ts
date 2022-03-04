@@ -56,7 +56,7 @@ export default class mmApi {
         err,
       };
     });
-    console.log(`Fetched ${url} in ${Date.now() - start}ms`);
+    //console.log(`Fetched ${url} in ${Date.now() - start}ms`);
     return this.dataTyper(data, options);
   }
 

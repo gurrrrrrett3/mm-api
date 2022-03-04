@@ -56,7 +56,6 @@ export default class mmCaching {
 
       if (oldPlayer) {
         if (oldPlayer.activePlaytime.d !== newPlayer.activePlaytime.d) {
-          console.log(`${newPlayer.activePlaytime.v} - ${oldPlayer.activePlaytime.v}`);
           changedPlayers.push(newPlayer.name);
         }
       } else {
@@ -66,13 +65,15 @@ export default class mmCaching {
 
     this.saveCache(data, "players");
     
-    console.log(`Cached ${data.data.length} players, with ${changedPlayers.length} changed.`);
+    console.log(`Finished cache check of ${data.data.length} players, with ${changedPlayers.length} changed.\nStarting async cache of ${changedPlayers.length} players...`);
 
     const queue: string[] = [];
 
     changedPlayers.forEach((player) => {
       queue.push(parse(player).childNodes[0].rawText);
     });
+
+    const start = Date.now();
 
     for (let i = 0; i < queue.length; i++) {
       const username = queue[i];
@@ -83,6 +84,8 @@ export default class mmCaching {
         this.reportData.sessions += playerData.sessions.length;
       });
     }
+
+    console.log(`Async cashe finished. Cached ${changedPlayers.length} players in ${Date.now() - start}ms.`);
   }
 
   //Quick utility functions

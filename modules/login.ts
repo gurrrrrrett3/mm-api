@@ -9,7 +9,7 @@ export default async function login(auth: { username: string; password: string }
     formData.append("user", auth.username);
     formData.append("password", auth.password);
 
-    console.log(`Logging in as ${auth.username}`);
+    console.log(`Logging in as ${auth.username}...`);
 
     //Send a POST request to the login endpoint
     fetch(config.loginUrl, {

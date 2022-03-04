@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="/assets/css/custom.css" />
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="MM Api Demo" />
+
+    <!-- Twitter -->
+    <meta property="twitter:title" content="MM Api Demo" />
+
+    <title>MM Api Demo</title>
+  </head>
+
+  <body>
+    <div id="container" style="width: 100%; height: 400px"></div>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="/assets/js/graph.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        //Figure out what data to fetch
+        const path = window.location.pathname;
+        const graphtype = path.split("/")[path.split("/").length - 1];
+
+        fetch(`/api/graph/data/${graphtype}`).then(async function (response) {
+            const data = await response.json();
+
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                },
+                chart: {
+                    backgroundColor: '#ffffff'
+                }
+            });
+
+
+            const chart = Highcharts.chart('container', {
+            chart: {
+                type: 'areaspline'
+            },
+            title: {
+                text: `${graphtype}`
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    second: '%H:%M:%S',
+                    minute: '%H:%M',
+                    hour: '%H:%M',
+                    day: '%e. %b',
+                    week: '%e. %b',
+                    month: '%b \'%y',
+                    year: '%Y'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: graphtype
+                }
+            }
+
+        });
+      });
+    });
+    </script>
+  </body>
+</html>

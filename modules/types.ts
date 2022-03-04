@@ -281,6 +281,11 @@ export interface mmFetchServersReturn {
 export interface mmFetchGraphReturn extends ANY {
   timestamp: number;
   timestamp_f: string;
+  serverUUID: {
+    uuid: string;
+  },
+  keys: string[];
+  values: number[][];
 }
 
 export interface mmFetchPingTableReturn {

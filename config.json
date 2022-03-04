@@ -5,5 +5,81 @@
   "headUrl": "https://mc-heads.net/avatar/",
   "cacheInterval": 60,
   "mapCacheInterval": 10,
-  "mapImageRenderSize": 128
+  "mapImageRenderSize": 128,
+
+  "servers": {
+    "lobby": "754db7a5-69f2-48f5-b9af-697fce143987",
+    "survival": "a7771123-7c46-4d62-8924-13cb5d602b7a",
+    "bungeeCord": "c1e46628-83b3-47b9-ad7e-5bc74e2a80df"
+  },
+
+  "ranks": [
+    {
+      "name": "default",
+      "color": "white",
+      "display": "Mercury",
+      "hidden": false
+    },
+    {
+      "name": "venus",
+      "color": "white",
+      "display": "Venus",
+      "hidden": false
+    },
+    {
+      "name": "earth",
+      "color": "white",
+      "display": "Earth",
+      "hidden": false
+    },
+    {
+      "name": "mars",
+      "color": "white",
+      "display": "Mars",
+      "hidden": false
+    },
+    {
+      "name": "jupiter",
+      "color": "white",
+      "display": "Jupiter",
+      "hidden": false
+    },
+    {
+      "name": "saturn",
+      "color": "white",
+      "display": "Saturn",
+      "hidden": false
+    },
+    {
+      "name": "uranus",
+      "color": "white",
+      "display": "Uranus",
+      "hidden": false
+    },
+    {
+      "name": "neptune",
+      "color": "white",
+      "display": "Neptune",
+      "hidden": false
+    },
+    {
+      "name": "host",
+      "color": "white",
+      "display": "Host",
+      "hidden": false
+    },
+    {
+      "name": "staff",
+      "color": "white",
+      "display": "Staff",
+      "hidden": false
+    },
+    {
+      "name": "staff-builder",
+      "color": "white",
+      "display": "Builder",
+      "hidden": false
+    }
+
+  ]
 }
