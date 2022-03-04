@@ -164,6 +164,12 @@ export default class mmCaching {
     if (!fs.existsSync(path.resolve(`./data/cache/players`))) {
       fs.mkdirSync(path.resolve(`./data/cache/players`), { recursive: true });
     }
+    if (!fs.existsSync(path.resolve(`./data/cache/players.json`))) {
+      fs.writeFileSync(path.resolve(`./data/cache/players.json`), "{}");
+    }
+    if (!fs.existsSync(path.resolve(`./data/cache/data.json`))) {
+      fs.writeFileSync(path.resolve(`./data/cache/data.json`), "{}");
+    }
     if (!fs.existsSync(path.resolve(`./data/cache/mapPlayers.json`))) {
       fs.writeFileSync(path.resolve(`./data/cache/mapPlayers.json`), "[]");
     }
