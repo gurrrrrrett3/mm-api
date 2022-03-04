@@ -50,7 +50,7 @@ export default class mmCaching {
     const newPlayers = data;
     let changedPlayers = [];
 
-    if (!oldPlayers) return;
+    if (!oldPlayers.data) return;
 
     for (let i = 0; i < newPlayers.data.length; i++) {
       const newPlayer = newPlayers.data[i];
