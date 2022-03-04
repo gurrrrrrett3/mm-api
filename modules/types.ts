@@ -331,7 +331,7 @@ export interface mmFetchPlayerReturn {
     _: string;
   }
   
-  interface Datum {
+  export interface Datum {
     sessions: string;
     name: string;
     activePlaytime: ActivePlaytime;

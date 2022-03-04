@@ -3,7 +3,7 @@ import path from "path";
 import parse from "node-html-parser";
 import mmInterface from "./interface";
 import mmApi from "./fetch";
-import { mmFetchPlayersReturn } from "./types";
+import { mmFetchPlayersReturn, Datum } from "./types";
 import config from "../config.json";
 import auth from "../auth.json";
 import login from "./login";
@@ -50,11 +50,14 @@ export default class mmCaching {
     const newPlayers = data;
     let changedPlayers = [];
 
-    if (!oldPlayers.data) return;
-
     for (let i = 0; i < newPlayers.data.length; i++) {
       const newPlayer = newPlayers.data[i];
-      const oldPlayer = oldPlayers.data.find((player) => player.name === newPlayer.name);
+      let oldPlayer: Datum | undefined
+      if (oldPlayers.data) {
+       oldPlayer = oldPlayers.data.find((player) => player.name === newPlayer.name);
+      } else {
+        oldPlayer = undefined;
+      }
 
       if (oldPlayer) {
         if (oldPlayer.activePlaytime.d !== newPlayer.activePlaytime.d) {
