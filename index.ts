@@ -22,5 +22,5 @@ App.get("/assets/:type/:file", (req, res) => {
 })
 
 App.listen(3001, () => {
-  console.log("Webserver is running on port 3000\nView at http://localhost:3001");
+  console.log("Webserver is running on port 3001\nView at http://localhost:3001");
 });
