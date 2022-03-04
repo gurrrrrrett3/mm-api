@@ -122,6 +122,9 @@ export default class mmCaching {
   }
 
   public loadCachedPlayer(username: string) {
+    if (!fs.existsSync(path.resolve(`./data/cache/players/${username}.json`))) {
+      return null;
+    }
     return JSON.parse(fs.readFileSync(path.resolve(`./data/cache/players/${username}.json`), "utf8"));
   }
 

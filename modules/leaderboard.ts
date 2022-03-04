@@ -24,6 +24,8 @@ export default class mmLeaderboard {
       const playername = parse(player.name).childNodes[0].rawText;
       const playerData = mmInterface.getPlayer(playername);
 
+      if (!playerData) return
+
       //Select the correct data value to use based on the timeframe
       let f_playtime = "";
       switch (stat) {
@@ -66,6 +68,8 @@ export default class mmLeaderboard {
       const playername = parse(player.name).childNodes[0].rawText;
       const playerData = mmInterface.getPlayer(playername);
 
+      if (!playerData) return
+
       //Select the correct data value to use based on the timeframe
       let mobKills = 0;
       switch (stat) {
@@ -102,6 +106,8 @@ export default class mmLeaderboard {
     data.data.forEach(async (player) => {
       const playername = parse(player.name).childNodes[0].rawText;
       const playerData = mmInterface.getPlayer(playername);
+      
+      if (!playerData) return
 
       //Select the correct data value to use based on the timeframe
       let playerKills = 0;

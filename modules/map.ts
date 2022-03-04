@@ -93,12 +93,19 @@ export default class mmMap {
     
     const minDistinceToEdge = this.genScale(zoom) / 2;
 
-    const tilesNeeded = {
+    let tilesNeeded = {
       above: corners.topLeft.z - z < minDistinceToEdge,
       below: z - corners.bottomLeft.z < minDistinceToEdge,
       left: corners.topLeft.x - x < minDistinceToEdge,
       right: x - corners.topRight.x < minDistinceToEdge,
+      topLeft: false,
+      topRight: false,
+      bottomLeft: false,
+      bottomRight: false,
     }
+
+    
+
   }
 
   public static genScale(zoom: number) {

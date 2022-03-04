@@ -11,6 +11,7 @@ export default async function login(auth: { username: string; password: string }
 
     console.log(`Logging in as ${auth.username}`);
 
+    //Send a POST request to the login endpoint
     fetch(config.loginUrl, {
       method: "POST",
       headers: {
@@ -23,7 +24,7 @@ export default async function login(auth: { username: string; password: string }
         console.log("Login failed");
         process.exit(1);
       }
-
+      //Extract the cookie from the response, and save it to the cache
       const token = res.headers.get("set-cookie")?.split(";")[0].replace("auth=", "");
       if (!token) {
         console.log("Login failed");

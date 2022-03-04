@@ -13,6 +13,10 @@ App.get("/", (req, res) => {
     res.sendFile(path.resolve(`./website/assets/pages/index.html`));
 });
 
+App.get("/player/:player", (req, res) => {
+    res.sendFile(path.resolve(`./website/assets/pages/player.html`));
+});
+
 App.get("/assets/:type/:file", (req, res) => {
   res.sendFile(path.resolve(`./website/assets/${req.params.type}/${req.params.file}`));
 })

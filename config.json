@@ -2,6 +2,7 @@
   "baseUrl": "https://analytics.metamechanists.org/v1",
   "loginUrl": "https://analytics.metamechanists.org/auth/login",
   "mapUrl": "https://map.metamechanists.org",
+  "headUrl": "https://mc-heads.net/avatar/",
   "cacheInterval": 60,
   "mapCacheInterval": 10,
   "mapImageRenderSize": 128

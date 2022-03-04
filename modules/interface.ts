@@ -89,6 +89,22 @@ export default class mmInterface {
     return out;
   }
 
+  public static async getOnlineSessionsPerServer(server: "survival" | "lobby") {
+
+    const sessions = await mmInterface.getOnlineSessons();
+
+    let out: Session[] = [];
+
+    sessions.forEach((session) => {
+      console.log(session.network_server)
+      if (session.network_server === (server === "survival" ? "Survival" : "Lobby")) {
+        out.push(session);
+      }
+    });
+
+    return out;
+  }
+
   //Wrapper function for fetching and generating leaderboards
   public static async getLeaderboard(type: LeaderboardType, stat?: "total" | "week" | "month") {
     stat = stat || "total";
