@@ -21,6 +21,6 @@ App.get("/assets/:type/:file", (req, res) => {
   res.sendFile(path.resolve(`./website/assets/${req.params.type}/${req.params.file}`));
 })
 
-App.listen(3000, () => {
-  console.log("Webserver is running on port 3000\nView at http://localhost:3000");
+App.listen(3001, () => {
+  console.log("Webserver is running on port 3000\nView at http://localhost:3001");
 });
