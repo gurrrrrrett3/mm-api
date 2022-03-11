@@ -3,12 +3,3 @@ A simple Demo API to interact with plan on the MetaMechanics server
 
 # Building
 Clone, and run `npm run int`
-
-# Create an auth.json file
-```json
-{
-  "username": "USERNAME",
-  "password": "PASSWORD"
-}
-
-```
